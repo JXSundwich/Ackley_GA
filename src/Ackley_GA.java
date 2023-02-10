@@ -11,12 +11,10 @@ public class Ackley_GA {
     double mutationRate;
     double recombinationRate;
     List<List<int[]>> DNAs;
-    String seedsString;
-    long[] seeds;
-    int seedsListSize;
-    int seedsPointer;
 
     DecimalFormat df = new DecimalFormat("0.00000000");
+
+
 
     Ackley_GA(int n, int populationSize, int[] xBound, int DNASize, double mutationRate, double recombinationRate) {
         this.ackleyN = n;
@@ -25,82 +23,18 @@ public class Ackley_GA {
         this.DNASize = DNASize;
         this.mutationRate = mutationRate;
         this.recombinationRate = recombinationRate;
-        //initialize seed's index with my matric number mod 100
-        this.seedsPointer = 2201757 % 100-1;
-        this.seedsString = "181 586 430 151 940 637 314 954 243 159 962 26 463 884 749 726 882 721 276 135 680 405 488 11 359 199 426 533 594 407 478 673 135 360 961 541 583 143 998 210 540 697 173 240 864 266 116 964 565 684 121 716 569 699 67 963 284 10 471 778 294 89 576 17 911 798 817 800 78 943 673 504 46 493 709 185 779 211 268 793 440 512 871 602 874 91 606 619 476 957 497 939 187 261 1 892 36 570 997 881 97 498 171 613 432 200 247 947 197 796 978 532 852 377 311 894 731 523 654 127 373 537 808 135 726 74 503 12 759 849 119 859 789 284 108 419 331 875 110 938 939 967 852 488 345 214 891 845 696 329 252 154 674 653 333 190 335 874 480 678 333 725 237 671 608 27 834 935 285 834 932 639 728 402 154 200 657 899 743 532 661 880 649 973 921 4 922 791 132 42 7 82 136 529 159 406 516 516 172 169 ";
+
         //initialize 1st generation
         DNAs = new ArrayList<>();
 
         //random generate 1st generation
-        /*
         for (int i = 0; i < this.populationSize; i++) {
             DNAs.add(new ArrayList<>());
             List<int[]> temp = DNAs.get(i);
             for (int j = 0; j < this.ackleyN; j++) {
                temp.add(randomDNA(DNASize));
             }
-        }**/
-
-        for(int i=0;i<populationSize;i++){
-            DNAs.add(new ArrayList<>());
         }
-        DNAs.get(0).add(new int[]{0, 0, 1, 1, 0, 0, 0, 1, 1, 1});
-        DNAs.get(0).add(new int[]{1, 0, 0, 0, 0, 0, 1, 0, 0, 1});
-        DNAs.get(0).add(new int[]{1, 0, 1, 0, 1, 1, 1, 1, 0, 1});
-
-        DNAs.get(1).add(new int[]{1, 1, 0, 1, 1, 0, 0, 0, 0, 1});
-        DNAs.get(1).add(new int[]{1, 0, 0, 0, 0, 0, 1, 1, 0, 0});
-        DNAs.get(1).add(new int[]{1, 0, 0, 0, 1, 1, 1, 1, 0, 0});
-
-        DNAs.get(2).add(new int[]{1, 1, 1, 0, 0, 1, 1, 0, 1, 0});
-        DNAs.get(2).add(new int[]{1, 1, 0, 0, 1, 1, 0, 1, 1, 1});
-        DNAs.get(2).add(new int[]{1, 0, 0, 0, 1, 1, 0, 0, 1, 0});
-
-        DNAs.get(3).add(new int[]{1, 0, 1, 1, 1, 0, 1, 0, 1, 0});
-        DNAs.get(3).add(new int[]{1, 0, 0, 1, 0, 1, 0, 1, 1, 0});
-        DNAs.get(3).add(new int[]{1, 0, 0, 1, 0, 1, 0, 0, 1, 0});
-
-        DNAs.get(4).add(new int[]{1, 1, 1, 1, 0, 1, 1, 0, 1, 1});
-        DNAs.get(4).add(new int[]{1, 1, 1, 0, 0, 1, 1, 1, 0, 1});
-        DNAs.get(4).add(new int[]{0, 0, 1, 0, 1, 1, 1, 1, 0, 0});
-
-        DNAs.get(5).add(new int[]{1, 0, 1, 1, 0, 0, 0, 1, 0, 1});
-        DNAs.get(5).add(new int[]{0, 0, 0, 1, 1, 0, 1, 0, 0, 0});
-        DNAs.get(5).add(new int[]{1, 1, 0, 1, 1, 1, 1, 0, 1, 0});
-
-        DNAs.get(6).add(new int[]{1, 1, 1, 1, 1, 0, 1, 1, 0, 1});
-        DNAs.get(6).add(new int[]{1, 1, 1, 1, 1, 0, 0, 1, 1, 1});
-        DNAs.get(6).add(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0});
-
-        DNAs.get(7).add(new int[]{1, 0, 1, 0, 1, 0, 0, 0, 1, 1});
-        DNAs.get(7).add(new int[]{1, 0, 0, 0, 1, 1, 1, 1, 0, 1});
-        DNAs.get(7).add(new int[]{0, 0, 1, 1, 0, 1, 0, 0, 0, 1});
-
-        DNAs.get(8).add(new int[]{1, 0, 0, 0, 0, 1, 1, 1, 1, 0});
-        DNAs.get(8).add(new int[]{1, 1, 0, 1, 1, 1, 1, 1, 0, 1});
-        DNAs.get(8).add(new int[]{0, 0, 1, 1, 1, 1, 1, 1, 1, 0});
-
-        DNAs.get(9).add(new int[]{0, 0, 0, 0, 0, 0, 1, 1, 0, 0});
-        DNAs.get(9).add(new int[]{0, 1, 1, 1, 0, 1, 1, 1, 0, 1});
-        DNAs.get(9).add(new int[]{0, 1, 0, 1, 0, 1, 0, 0, 0, 0});
-
-
-        String[] seedsStrings = seedsString.split(" ");
-        this.seedsListSize = seedsStrings.length;
-        this.seeds = new long[seedsStrings.length];
-        for (int i = 0; i < seedsStrings.length; i++) {
-            this.seeds[i] = Long.valueOf(seedsStrings[i]);
-        }
-
-        long[] transSeeds=new long[seedsListSize];
-        for(int j=0;j<40;j++){
-            transSeeds[j]=seeds[j*5];
-            transSeeds[j+40]=seeds[j*5+1];
-            transSeeds[j+80]=seeds[j*5+2];
-            transSeeds[j+120]=seeds[j*5+3];
-            transSeeds[j+160]=seeds[j*5+4];
-        }
-        this.seeds=transSeeds;
 
     }
 
@@ -224,7 +158,6 @@ public class Ackley_GA {
     /**
      * execute recombination:
      * exchange the latter part of each variation in chromosome
-     *
      * @param chrom1
      * @param chrom2
      * @return
@@ -269,18 +202,20 @@ public class Ackley_GA {
         finalRes.add(res2);
         return finalRes;
     }
-/*
-    public long getNextSeed() {
-        long next = this.seeds[seedsPointer];
-        seedsPointer = (seedsPointer + 1) % seedsListSize;
-        return next;
-    }*/
 
+
+    public long getNextSeed() {
+       Random rand=new Random();
+       return rand.nextInt(1000);
+    }
+
+    //use seeds given by prof
+    /*
     public long getNextSeed(){
         long seed=this.seeds[seedsPointer];
         this.seedsPointer=(this.seedsPointer+1)%seedsListSize;
         return seed;
-    }
+    }*/
 
     public int[] randomDNA(int size) {
         //generate 0/1 randomly
@@ -316,26 +251,22 @@ public class Ackley_GA {
     }
 
     public static void main(String[] args) {
-        //The recombination rate is usually between 0.6 and 0.9, we choose 0.7
-        //The mutation rate is usually between 1/pop_size(10) and 1/chromosome_size(30) so we choose 0.06
-        Ackley_GA ag = new Ackley_GA(3, 10, new int[]{-20, 20}, 10, 0.06, 0.7);
+        //The recombination rate is usually between 0.6 and 0.9
+        //The mutation rate is usually between 1/pop_size(10) and 1/chromosome_size(30)
+        Ackley_GA ag = new Ackley_GA(3, 200, new int[]{-20, 20}, 10, 0.006, 0.7);
 
     //    System.out.println("Ackley's function values for first generation: ");
        // double[] values2 = ag.getAckleyValuesOfGeneration();
-      //  System.out.println(values2);
-       // int[] x=new int[500];
-       // double[] y=new double[500];
-        for (int i = 0; i < 3; i++) {
+        int[] x=new int[500];
+        double[] y=new double[500];
+        for (int i = 0; i < 500; i++) {
             ag.startGA();
             double[] values1 = ag.getAckleyValuesOfGeneration();
-//            x[i]=i;
-//            y[i]=values1[values1.length-1];
-       //     System.out.println(values1);
+            x[i]=i;
+            y[i]=values1[values1.length-1];
         }
 
-        double[] values = ag.getAckleyValuesOfGeneration();
-
-        System.out.println(values);
+        System.out.println("End the iteration");
     }
 }
 
